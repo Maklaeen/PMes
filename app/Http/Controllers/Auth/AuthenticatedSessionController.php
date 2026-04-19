@@ -28,23 +28,16 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = Auth::user();
+        $role = optional($user->role)->role_name;
 
-        // Role-based redirect (string-based role)
-        switch ($user->role) {
-            case 'admin':
-                return redirect()->route('admin.dashboard');
-            case 'planner':
-                return redirect()->route('planner.dashboard');
-            case 'inventory':
-                return redirect()->route('inventory.dashboard');
-            case 'operator':
-                return redirect()->route('operator.dashboard');
-            case 'qc':
-                return redirect()->route('qc.dashboard');
-            default:
-                Auth::logout();
-                return redirect('/login');
-        }
+        return match($role) {
+            'superadmin', 'admin' => redirect()->route('admin.dashboard'),
+            'planner'             => redirect()->route('planner.dashboard'),
+            'inventory'           => redirect()->route('inventory.dashboard'),
+            'operator'            => redirect()->route('operator.dashboard'),
+            'qc'                  => redirect()->route('qc.dashboard'),
+            default               => redirect()->route('admin.dashboard'),
+        };
     }
 
     /**

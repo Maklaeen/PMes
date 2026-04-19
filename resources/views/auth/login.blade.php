@@ -1,54 +1,92 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | InkForge Solutions</title>
+    <title>Login – InkForge Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-600 to-blue-400 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        <div class="flex flex-col items-center mb-6">
-            <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-2">
-                <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 01-8 0m8 0a4 4 0 00-8 0m8 0V5a4 4 0 00-8 0v2m8 0v2a4 4 0 01-8 0V7"></path></svg>
-            </div>
-            <h1 class="text-2xl font-bold text-indigo-700">InkForge Solutions</h1>
-            <p class="text-gray-500 text-sm">Custom T-Shirt Printing MES</p>
+<body class="bg-gray-950 min-h-screen flex flex-col">
+
+    {{-- Navbar --}}
+    <nav class="border-b border-gray-800 px-6 py-4 flex items-center justify-between max-w-7xl mx-auto w-full">
+        <a href="{{ url('/') }}" class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+        </a>
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-xs">IF</div>
+            <span class="font-semibold text-white text-sm">InkForge Solutions</span>
         </div>
-        <!-- Session Status -->
-        @if (session('status'))
-            <div class="mb-4 text-green-600 text-center">
-                {{ session('status') }}
+    </nav>
+
+    {{-- Form --}}
+    <div class="flex-1 flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center font-bold text-lg mx-auto mb-4">IF</div>
+                <h1 class="text-2xl font-bold text-white">Welcome back</h1>
+                <p class="text-gray-400 text-sm mt-1">Sign in to your InkForge account</p>
             </div>
-        @endif
-        <form method="POST" action="{{ route('login') }}" class="space-y-4">
-            @csrf
-            <div>
-                <label for="email" class="block text-gray-700 font-medium">Email</label>
-                <input id="email" name="email" type="email" required autofocus class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400" value="{{ old('email') }}">
-                @if ($errors->has('email'))
-                    <div class="text-red-500 text-xs mt-1">{{ $errors->first('email') }}</div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8">
+                @if (session('status'))
+                    <div class="mb-4 text-green-400 text-sm text-center bg-green-400/10 border border-green-400/20 rounded-lg px-4 py-2">
+                        {{ session('status') }}
+                    </div>
                 @endif
+
+                <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                    @csrf
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1.5">Email address</label>
+                        <input id="email" name="email" type="email" required autofocus
+                            value="{{ old('email') }}"
+                            class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-500 transition"
+                            placeholder="you@example.com">
+                        @error('email')
+                            <p class="text-red-400 text-xs mt-1.5">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
+                        <input id="password" name="password" type="password" required
+                            class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent placeholder-gray-500 transition"
+                            placeholder="••••••••">
+                        @error('password')
+                            <p class="text-red-400 text-xs mt-1.5">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="remember" class="w-4 h-4 rounded border-gray-600 bg-gray-800 text-orange-500 focus:ring-orange-500">
+                            <span class="text-sm text-gray-400">Remember me</span>
+                        </label>
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" class="text-sm text-orange-400 hover:text-orange-300 transition">Forgot password?</a>
+                        @endif
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 rounded-lg transition text-sm">
+                        Sign In
+                    </button>
+                </form>
             </div>
-            <div>
-                <label for="password" class="block text-gray-700 font-medium">Password</label>
-                <input id="password" name="password" type="password" required class="mt-1 w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                @if ($errors->has('password'))
-                    <div class="text-red-500 text-xs mt-1">{{ $errors->first('password') }}</div>
-                @endif
-            </div>
-            <div class="flex items-center justify-between">
-                <label class="flex items-center">
-                    <input type="checkbox" name="remember" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-400">
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-                @if (Route::has('password.request'))
-                    <a class="text-sm text-indigo-600 hover:underline" href="{{ route('password.request') }}">Forgot password?</a>
-                @endif
-            </div>
-            <button type="submit" class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition">Login</button>
-        </form>
+
+            <p class="text-center text-gray-500 text-sm mt-6">
+                Don't have an account?
+                <a href="{{ route('register') }}" class="text-orange-400 hover:text-orange-300 transition font-medium">Create one →</a>
+            </p>
+        </div>
     </div>
+
 </body>
 </html>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 // new added imports
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\PlannerDashboardController;
 
 Route::get('/', function () {
@@ -21,9 +22,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'is_admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard.admin');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/profile', [AdminProfileController::class, 'show'])->name('admin.profile');
+    Route::patch('/admin/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+    Route::patch('/admin/profile/password', [AdminProfileController::class, 'updatePassword'])->name('admin.profile.password');
+    Route::post('/admin/profile/verify-email', [AdminProfileController::class, 'sendVerification'])->name('admin.profile.verify');
 });
 
 Route::middleware(['auth', 'is_planner'])->group(function () {

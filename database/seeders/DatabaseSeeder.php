@@ -2,24 +2,42 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $roles = [
+            ['role_name' => 'superadmin', 'role_description' => 'Super Administrator / Developer'],
+            ['role_name' => 'admin',      'role_description' => 'Administrator / Business Owner'],
+            ['role_name' => 'planner',    'role_description' => 'Production Planner / Supervisor'],
+            ['role_name' => 'inventory',  'role_description' => 'Inventory Staff'],
+            ['role_name' => 'operator',   'role_description' => 'Production Operator'],
+            ['role_name' => 'qc',         'role_description' => 'Quality Control Staff'],
+        ];
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        foreach ($roles as $role) {
+            Role::firstOrCreate(['role_name' => $role['role_name']], $role);
+        }
+
+        $adminRole = Role::where('role_name', 'admin')->first();
+
+        User::firstOrCreate(['email' => 'admin@inkforge.com'], [
+            'name'     => 'Admin',
+            'password' => Hash::make('password'),
+            'role_id'  => $adminRole->id,
+        ]);
+
+        // Developer superadmin account
+        $superadminRole = Role::where('role_name', 'superadmin')->first();
+        User::firstOrCreate(['email' => 'superadmin@inkforge.com'], [
+            'name'     => 'Developer',
+            'password' => Hash::make('superadmin123'),
+            'role_id'  => $superadminRole->id,
         ]);
     }
 }
