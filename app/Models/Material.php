@@ -12,4 +12,9 @@ class Material extends Model
     {
         return $this->hasMany(BillOfMaterial::class);
     }
+
+    public function movements()
+    {
+        return $this->hasMany(MaterialMovement::class);
+    }
 }

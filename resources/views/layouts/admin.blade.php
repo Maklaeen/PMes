@@ -6,6 +6,7 @@
     <title>@yield('title', 'Dashboard') – InkForge MES</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style type="text/tailwindcss">
         @layer base {
             body { 
@@ -37,6 +38,25 @@
     </style>
 </head>
 <body class="text-gray-200">
+@php
+    $roleName = optional(auth()->user()->role)->role_name;
+    $dashboardRoute = match ($roleName) {
+        'planner' => 'planner.dashboard',
+        'inventory' => 'inventory.dashboard',
+        'operator' => 'operator.dashboard',
+        'qc' => 'qc.dashboard',
+        default => 'admin.dashboard',
+    };
+
+    $isMasterDataRole = in_array($roleName, ['superadmin', 'admin'], true);
+    $canSeeAuditLogs = $roleName === 'superadmin';
+    $canSeeSchedules = in_array($roleName, ['superadmin', 'admin', 'planner', 'inventory', 'qc'], true);
+    $canSeeWorkOrders = in_array($roleName, ['superadmin', 'admin', 'planner', 'operator'], true);
+    $canSeeCosting = in_array($roleName, ['superadmin', 'admin', 'planner'], true);
+    $canSeeInventory = in_array($roleName, ['superadmin', 'admin', 'inventory'], true);
+    $canSeeQc = in_array($roleName, ['superadmin', 'admin', 'qc'], true);
+    $canSeeProductionProgress = in_array($roleName, ['superadmin', 'admin', 'planner'], true);
+@endphp
 <div class="flex h-screen overflow-hidden">
 
     {{-- Sidebar --}}
@@ -55,62 +75,86 @@
             <div class="px-4 mb-4 mt-2">
                 <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Main</p>
             </div>
-            <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route($dashboardRoute) }}" class="sidebar-link {{ request()->routeIs($dashboardRoute) ? 'active' : '' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
                 Dashboard
             </a>
 
-            <div class="px-4 mb-4 mt-10">
-                <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Master Data</p>
-            </div>
-            <a href="{{ route('admin.users') }}" class="sidebar-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                Users
-            </a>
-            <a href="{{ route('admin.products') }}" class="sidebar-link {{ request()->routeIs('admin.products') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                Products
-            </a>
-            <a href="{{ route('admin.materials') }}" class="sidebar-link {{ request()->routeIs('admin.materials') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                Materials
-            </a>
-            <a href="{{ route('admin.bom') }}" class="sidebar-link {{ request()->routeIs('admin.bom') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                Bill of Materials
-            </a>
+            @if($isMasterDataRole)
+                <div class="px-4 mb-4 mt-10">
+                    <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Master Data</p>
+                </div>
+                <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Users
+                </a>
+                <a href="{{ route('admin.products.index') }}" class="sidebar-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    Products
+                </a>
+                <a href="{{ route('admin.materials.index') }}" class="sidebar-link {{ request()->routeIs('admin.materials.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                    Materials
+                </a>
+                <a href="{{ route('admin.bom.index') }}" class="sidebar-link {{ request()->routeIs('admin.bom.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    Bill of Materials
+                </a>
+            @endif
 
             <div class="px-4 mb-4 mt-10">
                 <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Production</p>
             </div>
-            <a href="{{ route('admin.production_schedule') }}" class="sidebar-link {{ request()->routeIs('admin.production_schedule') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/></svg>
-                Production Schedule
-            </a>
-            <a href="{{ route('admin.work_orders') }}" class="sidebar-link {{ request()->routeIs('admin.work_orders') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Work Orders
-            </a>
-            <a href="{{ route('admin.production_costing') }}" class="sidebar-link {{ request()->routeIs('admin.production_costing') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
-                Production Costing
-            </a>
-            <a href="{{ route('admin.quality_control') }}" class="sidebar-link {{ request()->routeIs('admin.quality_control') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                Quality Control
-            </a>
+            @if($canSeeProductionProgress)
+                <a href="{{ route('production.dashboard') }}" class="sidebar-link {{ request()->routeIs('production.dashboard') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M7 14l3-3 3 3 6-6"/></svg>
+                    Progress Dashboard
+                </a>
+            @endif
+            @if($canSeeSchedules)
+                <a href="{{ route('production.schedules.index') }}" class="sidebar-link {{ request()->routeIs('production.schedules.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+                    Production Schedules
+                </a>
+            @endif
+            @if($canSeeWorkOrders)
+                <a href="{{ route('production.work_orders.index') }}" class="sidebar-link {{ request()->routeIs('production.work_orders.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Work Orders
+                </a>
+            @endif
+            @if($canSeeInventory)
+                <a href="{{ route('inventory.material_movements.index') }}" class="sidebar-link {{ request()->routeIs('inventory.material_movements.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18"/></svg>
+                    Material Movements
+                </a>
+            @endif
+            @if($canSeeCosting)
+                <a href="{{ route('costing.index') }}" class="sidebar-link {{ request()->routeIs('costing.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+                    Production Costing
+                </a>
+            @endif
+            @if($canSeeQc)
+                <a href="{{ route('qc.inspections.index') }}" class="sidebar-link {{ request()->routeIs('qc.inspections.*') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Quality Control
+                </a>
+            @endif
 
             <div class="px-4 mb-4 mt-10">
                 <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">System</p>
             </div>
-            <a href="{{ route('admin.profile') }}" class="sidebar-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">
+            <a href="{{ route('profile.edit') }}" class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 My Profile
             </a>
-            <a href="{{ route('admin.audit_logs') }}" class="sidebar-link {{ request()->routeIs('admin.audit_logs') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                Audit Logs
-            </a>
+            @if($canSeeAuditLogs)
+                <a href="{{ route('admin.audit_logs') }}" class="sidebar-link {{ request()->routeIs('admin.audit_logs') ? 'active' : '' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Audit Logs
+                </a>
+            @endif
         </nav>
 
         {{-- Sidebar Footer --}}
@@ -160,5 +204,28 @@
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    (function () {
+        if (!window.flatpickr) return;
+
+        document.querySelectorAll('input.js-datepicker').forEach(function (el) {
+            window.flatpickr(el, {
+                dateFormat: 'Y-m-d',
+                allowInput: false,
+            });
+        });
+
+        document.querySelectorAll('input.js-datetimepicker').forEach(function (el) {
+            window.flatpickr(el, {
+                enableTime: true,
+                time_24hr: true,
+                dateFormat: 'Y-m-d H:i',
+                allowInput: false,
+            });
+        });
+    })();
+</script>
 </body>
 </html>

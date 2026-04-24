@@ -9,9 +9,9 @@
             <h2 class="text-2xl font-bold text-white tracking-tight">System Users</h2>
             <p class="text-sm text-gray-500 mt-1">Manage and monitor all system access and roles.</p>
         </div>
-        <button class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-orange-900/20">
+        <a href="{{ route('admin.users.create') }}" class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-orange-900/20">
             Add New User
-        </button>
+        </a>
     </div>
 
     <div class="overflow-x-auto">
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(App\Models\User::with('role')->get() as $user)
+                @foreach($users as $user)
                 <tr class="bg-white/[0.02] hover:bg-white/[0.05] transition-colors group">
                     <td class="px-6 py-5 rounded-l-2xl border-y border-l border-white/[0.05]">
                         <div class="flex items-center gap-4">
@@ -54,14 +54,23 @@
                         <span class="text-xs text-gray-400">{{ $user->created_at->format('M d, Y') }}</span>
                     </td>
                     <td class="px-6 py-5 rounded-r-2xl border-y border-r border-white/[0.05] text-right">
-                        <button class="p-2 text-gray-500 hover:text-white transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-                        </button>
+                        <div class="inline-flex items-center gap-2">
+                            <a href="{{ route('admin.users.edit', $user) }}" class="px-4 py-2 text-xs font-bold rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.05] text-white transition-all">Edit</a>
+                            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete this user?');" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-4 py-2 text-xs font-bold rounded-xl bg-red-600/20 hover:bg-red-600/30 border border-red-500/30 text-red-300 transition-all">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+    <div class="mt-6">
+        {{ $users->links() }}
     </div>
 </div>
 @endsection

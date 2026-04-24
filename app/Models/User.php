@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\VerifyEmailNotification;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,9 +49,39 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
         ];
     }
 
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmailNotification);
+    }
+
     public function role()
 {
     return $this->belongsTo(Role::class, 'role_id');
 }
+
+    public function createdProductionSchedules()
+    {
+        return $this->hasMany(ProductionSchedule::class, 'created_by_user_id');
+    }
+
+    public function assignedWorkOrders()
+    {
+        return $this->hasMany(WorkOrder::class, 'assigned_to_user_id');
+    }
+
+    public function qualityChecks()
+    {
+        return $this->hasMany(QualityCheck::class, 'inspected_by_user_id');
+    }
+
+    public function materialMovements()
+    {
+        return $this->hasMany(MaterialMovement::class, 'created_by_user_id');
+    }
+
+    public function productionCosts()
+    {
+        return $this->hasMany(ProductionCost::class, 'computed_by_user_id');
+    }
 
 }

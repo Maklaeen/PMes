@@ -12,4 +12,9 @@ class Product extends Model
     {
         return $this->hasMany(BillOfMaterial::class);
     }
+
+    public function productionSchedules()
+    {
+        return $this->hasMany(ProductionSchedule::class);
+    }
 }
