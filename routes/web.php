@@ -27,6 +27,17 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::patch('/admin/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
     Route::patch('/admin/profile/password', [AdminProfileController::class, 'updatePassword'])->name('admin.profile.password');
     Route::post('/admin/profile/verify-email', [AdminProfileController::class, 'sendVerification'])->name('admin.profile.verify');
+
+    // Management Routes
+    Route::get('/admin/users', [AdminDashboardController::class, 'users'])->name('admin.users');
+    Route::get('/admin/products', [AdminDashboardController::class, 'products'])->name('admin.products');
+    Route::get('/admin/materials', [AdminDashboardController::class, 'materials'])->name('admin.materials');
+    Route::get('/admin/bom', [AdminDashboardController::class, 'bom'])->name('admin.bom');
+    Route::get('/admin/production-schedule', [AdminDashboardController::class, 'productionSchedule'])->name('admin.production_schedule');
+    Route::get('/admin/work-orders', [AdminDashboardController::class, 'workOrders'])->name('admin.work_orders');
+    Route::get('/admin/production-costing', [AdminDashboardController::class, 'productionCosting'])->name('admin.production_costing');
+    Route::get('/admin/quality-control', [AdminDashboardController::class, 'qualityControl'])->name('admin.quality_control');
+    Route::get('/admin/audit-logs', [AdminDashboardController::class, 'auditLogs'])->name('admin.audit_logs');
 });
 
 Route::middleware(['auth', 'is_planner'])->group(function () {

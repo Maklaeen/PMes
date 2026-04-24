@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
             'role_id'  => $adminRole->id,
         ]);
 
-        // Developer superadmin account
+        // User requested account
         $superadminRole = Role::where('role_name', 'superadmin')->first();
-        User::firstOrCreate(['email' => 'superadmin@inkforge.com'], [
-            'name'     => 'Developer',
-            'password' => Hash::make('superadmin123'),
+        User::updateOrCreate(['email' => 'admin@inkforge.local'], [
+            'name'     => 'InkForge Admin',
+            'password' => Hash::make('admin123'),
             'role_id'  => $superadminRole->id,
         ]);
     }

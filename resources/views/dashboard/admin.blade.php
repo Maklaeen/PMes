@@ -1,46 +1,141 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="grid grid-cols-4 gap-4 mb-6">
-    <div class="bg-blue-500 text-white rounded-lg p-6 shadow">
-        <div class="text-2xl font-bold">{{ $stats['users'] }}</div>
-        <div>Users</div>
-        <a href="#" class="text-sm underline">View details</a>
+{{-- Stat Cards --}}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    {{-- Users Card --}}
+    <div class="bg-[#111114] border border-white/[0.05] rounded-[24px] p-8 hover:bg-[#16161a] transition-all duration-300 group relative overflow-hidden">
+        <div class="flex items-start justify-between mb-8">
+            <div class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 border border-blue-500/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <div class="w-10 h-1.5 bg-blue-600 rounded-full"></div>
+        </div>
+        <div class="space-y-1">
+            <div class="text-5xl font-extrabold text-white tracking-tighter">{{ $stats['users'] }}</div>
+            <div class="text-[13px] font-bold text-gray-600 uppercase tracking-wider">Users</div>
+        </div>
+        <a href="#" class="mt-10 flex items-center gap-2 text-[11px] font-bold text-blue-500 hover:text-blue-400 transition-colors uppercase tracking-widest">
+            View details
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
     </div>
-    <div class="bg-green-500 text-white rounded-lg p-6 shadow">
-        <div class="text-2xl font-bold">{{ $stats['products'] }}</div>
-        <div>Products</div>
-        <a href="#" class="text-sm underline">View details</a>
+
+    {{-- Products Card --}}
+    <div class="bg-[#111114] border border-white/[0.05] rounded-[24px] p-8 hover:bg-[#16161a] transition-all duration-300 group relative overflow-hidden">
+        <div class="flex items-start justify-between mb-8">
+            <div class="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            </div>
+            <div class="w-10 h-1.5 bg-emerald-600 rounded-full"></div>
+        </div>
+        <div class="space-y-1">
+            <div class="text-5xl font-extrabold text-white tracking-tighter">{{ $stats['products'] }}</div>
+            <div class="text-[13px] font-bold text-gray-600 uppercase tracking-wider">Products</div>
+        </div>
+        <a href="#" class="mt-10 flex items-center gap-2 text-[11px] font-bold text-emerald-500 hover:text-emerald-400 transition-colors uppercase tracking-widest">
+            View details
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
     </div>
-    <div class="bg-blue-400 text-white rounded-lg p-6 shadow">
-        <div class="text-2xl font-bold">{{ $stats['materials'] }}</div>
-        <div>Materials</div>
-        <a href="#" class="text-sm underline">View details</a>
+
+    {{-- Materials Card --}}
+    <div class="bg-[#111114] border border-white/[0.05] rounded-[24px] p-8 hover:bg-[#16161a] transition-all duration-300 group relative overflow-hidden">
+        <div class="flex items-start justify-between mb-8">
+            <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-500 border border-purple-500/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            </div>
+            <div class="w-10 h-1.5 bg-purple-600 rounded-full"></div>
+        </div>
+        <div class="space-y-1">
+            <div class="text-5xl font-extrabold text-white tracking-tighter">{{ $stats['materials'] }}</div>
+            <div class="text-[13px] font-bold text-gray-600 uppercase tracking-wider">Materials</div>
+        </div>
+        <a href="#" class="mt-10 flex items-center gap-2 text-[11px] font-bold text-purple-500 hover:text-purple-400 transition-colors uppercase tracking-widest">
+            View details
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
     </div>
-    <div class="bg-yellow-400 text-white rounded-lg p-6 shadow">
-        <div class="text-2xl font-bold">-</div>
-        <div>Work Orders</div>
-        <a href="#" class="text-sm underline">View details</a>
+
+    {{-- Work Orders Card --}}
+    <div class="bg-[#111114] border border-white/[0.05] rounded-[24px] p-8 hover:bg-[#16161a] transition-all duration-300 group relative overflow-hidden">
+        <div class="flex items-start justify-between mb-8">
+            <div class="w-12 h-12 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 border border-orange-500/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="w-10 h-1.5 bg-orange-600 rounded-full"></div>
+        </div>
+        <div class="space-y-1">
+            <div class="text-5xl font-extrabold text-white tracking-tighter">-</div>
+            <div class="text-[13px] font-bold text-gray-600 uppercase tracking-wider">Work Orders</div>
+        </div>
+        <a href="#" class="mt-10 flex items-center gap-2 text-[11px] font-bold text-orange-500 hover:text-orange-400 transition-colors uppercase tracking-widest">
+            View details
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
     </div>
 </div>
 
-<div class="grid grid-cols-2 gap-4">
-    <div class="bg-white rounded-lg shadow p-4">
-        <div class="font-semibold mb-3">Quick Links</div>
-        <ul class="space-y-2 text-sm">
-            <li><a href="#" class="text-blue-600 hover:underline">→ Manage Users</a></li>
-            <li><a href="#" class="text-blue-600 hover:underline">→ Manage Products</a></li>
-            <li><a href="#" class="text-blue-600 hover:underline">→ Manage Materials</a></li>
-            <li><a href="#" class="text-blue-600 hover:underline">→ Bill of Materials (BOM)</a></li>
-            <li><a href="#" class="text-blue-600 hover:underline">→ Audit Logs</a></li>
-        </ul>
+{{-- Secondary Sections --}}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    {{-- Quick Actions --}}
+    <div class="bg-gray-900/40 border border-gray-800/50 rounded-2xl p-8">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-1 h-6 bg-orange-500 rounded-full"></div>
+            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em]">Quick Actions</h2>
+        </div>
+        <div class="space-y-2">
+            @foreach([
+                ['name' => 'Manage Users', 'icon' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'],
+                ['name' => 'Manage Products', 'icon' => 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'],
+                ['name' => 'Manage Materials', 'icon' => 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'],
+                ['name' => 'Bill of Materials (BOM)', 'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'],
+                ['name' => 'Audit Logs', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+            ] as $action)
+            <a href="#" class="flex items-center justify-between p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                <div class="flex items-center gap-4">
+                    <div class="text-gray-500 group-hover:text-orange-500 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $action['icon'] }}"/></svg>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-300 group-hover:text-white transition-colors">{{ $action['name'] }}</span>
+                </div>
+                <svg class="w-4 h-4 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            @endforeach
+        </div>
     </div>
-    <div class="bg-white rounded-lg shadow p-4">
-        <div class="font-semibold mb-3">System Info</div>
-        <div class="text-sm text-gray-600 space-y-1">
-            <div>Logged in as: <span class="font-medium text-gray-800">{{ auth()->user()->name }}</span></div>
-            <div>Role: <span class="font-medium text-gray-800">{{ ucfirst(optional(auth()->user()->role)->role_name ?? 'N/A') }}</span></div>
-            <div>Date: <span class="font-medium text-gray-800">{{ now()->format('F d, Y') }}</span></div>
+
+    {{-- Session Info --}}
+    <div class="bg-gray-900/40 border border-gray-800/50 rounded-2xl p-8">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-1 h-6 bg-orange-500 rounded-full"></div>
+            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em]">Session Info</h2>
+        </div>
+        <div class="space-y-6">
+            <div class="flex items-center justify-between pb-6 border-b border-gray-800/50">
+                <div class="text-sm font-medium text-gray-500">Logged in as</div>
+                <div class="text-sm font-bold text-white text-right">
+                    <div>{{ auth()->user()->name }}</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">InkForge Administrator</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between pb-6 border-b border-gray-800/50">
+                <div class="text-sm font-medium text-gray-500">Role</div>
+                <div class="text-sm font-bold text-orange-500 uppercase tracking-widest bg-orange-500/5 px-3 py-1 rounded-lg border border-orange-500/10">
+                    {{ optional(auth()->user()->role)->role_name ?? 'Superadmin' }}
+                </div>
+            </div>
+            <div class="flex items-center justify-between pb-6 border-b border-gray-800/50">
+                <div class="text-sm font-medium text-gray-500">Date</div>
+                <div class="text-sm font-bold text-white">{{ now()->format('F d, Y') }}</div>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="text-sm font-medium text-gray-500">System status</div>
+                <div class="flex items-center gap-2 text-sm font-bold text-emerald-500">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                    Online
+                </div>
+            </div>
         </div>
     </div>
 </div>

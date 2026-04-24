@@ -18,4 +18,14 @@ class AdminDashboardController extends Controller
 
         return view('dashboard.admin', compact('stats'));
     }
+
+    public function users() { return view('admin.users.index'); }
+    public function products() { return view('admin.products.index'); }
+    public function materials() { return view('admin.materials.index'); }
+    public function bom() { return view('admin.bom.index'); }
+    public function productionSchedule() { return view('admin.production.schedule'); }
+    public function workOrders() { return view('admin.production.work_orders'); }
+    public function productionCosting() { return view('admin.production.costing'); }
+    public function qualityControl() { return view('admin.production.quality'); }
+    public function auditLogs() { return view('admin.system.audit_logs'); }
 }

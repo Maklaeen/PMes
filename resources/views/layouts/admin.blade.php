@@ -3,117 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') – InkForge Solutions</title>
+    <title>@yield('title', 'Dashboard') – InkForge MES</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .nav-link { @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition; }
-        .nav-link.active { @apply bg-orange-500/10 text-orange-400; }
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            body { 
+                font-family: 'Plus Jakarta Sans', sans-serif; 
+                @apply bg-[#0c0c0e] text-gray-200;
+            }
+        }
+        @layer components {
+            .sidebar-link { 
+                @apply flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-semibold text-gray-500 hover:text-white hover:bg-white/5 transition-all duration-200; 
+            }
+            .sidebar-link.active { 
+                @apply text-orange-500 bg-orange-500/10 relative;
+            }
+            .sidebar-link.active::before {
+                content: '';
+                @apply absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-orange-500 rounded-r-full;
+            }
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 4px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                @apply bg-gray-800 rounded-full;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-950 text-white">
-<div class="flex min-h-screen">
+<body class="text-gray-200">
+<div class="flex h-screen overflow-hidden">
 
     {{-- Sidebar --}}
-    <aside class="w-60 bg-gray-900 border-r border-gray-800 flex flex-col flex-shrink-0">
+    <aside class="w-72 bg-[#0c0c0e] border-r border-white/[0.05] flex flex-col flex-shrink-0">
         {{-- Logo --}}
-        <div class="px-4 py-5 border-b border-gray-800 flex items-center gap-2">
-            <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0">IF</div>
+        <div class="px-8 py-10 flex items-center gap-4">
+            <div class="w-11 h-11 bg-orange-600 rounded-2xl flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-orange-900/20">IF</div>
             <div>
-                <div class="font-semibold text-sm text-white leading-tight">InkForge</div>
-                <div class="text-xs text-gray-500 leading-tight">MES v1.0</div>
+                <div class="font-extrabold text-lg text-white tracking-tight leading-tight">InkForge</div>
+                <div class="text-[10px] font-bold text-gray-600 uppercase tracking-[0.2em] mt-1">MES v1.0</div>
             </div>
         </div>
 
         {{-- Navigation --}}
-        <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-            <p class="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 mb-2">Main</p>
-            <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <nav class="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar pb-10">
+            <div class="px-4 mb-4 mt-2">
+                <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Main</p>
+            </div>
+            <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
                 Dashboard
             </a>
 
-            <p class="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 mt-4 mb-2">Master Data</p>
-            <a href="#" class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <div class="px-4 mb-4 mt-10">
+                <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Master Data</p>
+            </div>
+            <a href="{{ route('admin.users') }}" class="sidebar-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 Users
             </a>
-            <a href="#" class="nav-link {{ request()->routeIs('admin.products*') ? 'active' : '' }}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            <a href="{{ route('admin.products') }}" class="sidebar-link {{ request()->routeIs('admin.products') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                 Products
             </a>
-            <a href="#" class="nav-link {{ request()->routeIs('admin.materials*') ? 'active' : '' }}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <a href="{{ route('admin.materials') }}" class="sidebar-link {{ request()->routeIs('admin.materials') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                 Materials
             </a>
-            <a href="#" class="nav-link {{ request()->routeIs('admin.bom*') ? 'active' : '' }}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <a href="{{ route('admin.bom') }}" class="sidebar-link {{ request()->routeIs('admin.bom') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                 Bill of Materials
             </a>
 
-            <p class="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 mt-4 mb-2">Production</p>
-            <a href="#" class="nav-link">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <div class="px-4 mb-4 mt-10">
+                <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">Production</p>
+            </div>
+            <a href="{{ route('admin.production_schedule') }}" class="sidebar-link {{ request()->routeIs('admin.production_schedule') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/></svg>
                 Production Schedule
             </a>
-            <a href="#" class="nav-link">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            <a href="{{ route('admin.work_orders') }}" class="sidebar-link {{ request()->routeIs('admin.work_orders') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 Work Orders
             </a>
-            <a href="#" class="nav-link">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <a href="{{ route('admin.production_costing') }}" class="sidebar-link {{ request()->routeIs('admin.production_costing') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
                 Production Costing
             </a>
-            <a href="#" class="nav-link">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <a href="{{ route('admin.quality_control') }}" class="sidebar-link {{ request()->routeIs('admin.quality_control') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 Quality Control
             </a>
 
-            <p class="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 mt-4 mb-2">System</p>
-            <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            <div class="px-4 mb-4 mt-10">
+                <p class="text-[11px] font-bold text-gray-700 uppercase tracking-[0.25em]">System</p>
+            </div>
+            <a href="{{ route('admin.profile') }}" class="sidebar-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 My Profile
             </a>
-            <a href="#" class="nav-link">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <a href="{{ route('admin.audit_logs') }}" class="sidebar-link {{ request()->routeIs('admin.audit_logs') ? 'active' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 Audit Logs
             </a>
         </nav>
 
         {{-- Sidebar Footer --}}
-        <div class="px-3 py-4 border-t border-gray-800">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="nav-link w-full text-red-400 hover:text-red-300 hover:bg-red-500/10">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                    Logout
-                </button>
-            </form>
+        <div class="p-6 border-t border-white/[0.05] bg-[#0c0c0e]">
+            <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.05] group">
+                <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white shadow-lg shadow-blue-900/20">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="text-[13px] font-bold text-white truncate">{{ auth()->user()->name }}</div>
+                    <div class="text-[10px] font-bold text-gray-600 truncate uppercase tracking-wider mt-0.5">{{ ucfirst(optional(auth()->user()->role)->role_name ?? 'Superadmin') }}</div>
+                </div>
+                <form method="POST" action="{{ route('logout') }}" class="opacity-0 group-hover:opacity-100 transition-opacity">
+                    @csrf
+                    <button type="submit" class="p-2 text-gray-500 hover:text-red-400 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    </button>
+                </form>
+            </div>
         </div>
     </aside>
 
     {{-- Main --}}
-    <div class="flex-1 flex flex-col min-w-0">
+    <div class="flex-1 flex flex-col min-w-0 bg-[#0c0c0e]">
         {{-- Topbar --}}
-        <header class="bg-gray-900 border-b border-gray-800 px-6 py-3 flex items-center justify-between flex-shrink-0">
-            <h1 class="font-semibold text-white">@yield('title', 'Dashboard')</h1>
-            <div class="flex items-center gap-3">
-                <span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-1 rounded-full font-medium">
-                    {{ ucfirst(optional(auth()->user()->role)->role_name ?? 'N/A') }}
-                </span>
-                <a href="{{ route('admin.profile') }}" class="flex items-center gap-2 hover:opacity-80 transition">
-                    <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-xs font-bold">
-                        {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
-                    </div>
-                    <span class="text-sm text-gray-300">{{ auth()->user()->name }}</span>
-                </a>
+        <header class="h-20 border-b border-gray-800/50 px-8 flex items-center justify-between flex-shrink-0">
+            <h1 class="text-2xl font-bold text-white tracking-tight">@yield('title', 'Dashboard')</h1>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-full">
+                    <div class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></div>
+                    <span class="text-[11px] font-bold text-orange-500 uppercase tracking-wider">
+                        {{ optional(auth()->user()->role)->role_name ?? 'Superadmin' }}
+                    </span>
+                </div>
+                <div class="text-[11px] font-medium text-gray-500 bg-gray-900 px-3 py-1.5 rounded-full border border-gray-800">
+                    {{ now()->format('M d, Y') }}
+                </div>
             </div>
         </header>
 
         {{-- Content --}}
-        <main class="flex-1 p-6 overflow-auto">
-            @yield('content')
+        <main class="flex-1 p-8 overflow-y-auto custom-scrollbar">
+            <div class="max-w-[1400px] mx-auto">
+                @yield('content')
+            </div>
         </main>
     </div>
 
