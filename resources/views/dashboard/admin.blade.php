@@ -116,7 +116,7 @@
                 <div class="text-sm font-medium text-gray-500">Logged in as</div>
                 <div class="text-sm font-bold text-white text-right">
                     <div>{{ auth()->user()->name }}</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">InkForge Administrator</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">PMES Administrator</div>
                 </div>
             </div>
             <div class="flex items-center justify-between pb-6 border-b border-gray-800/50">

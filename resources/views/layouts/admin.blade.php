@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') – InkForge MES</title>
+    <title>@yield('title', 'Dashboard') – PMES</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -63,9 +63,9 @@
     <aside class="w-72 bg-[#0c0c0e] border-r border-white/[0.05] flex flex-col flex-shrink-0">
         {{-- Logo --}}
         <div class="px-8 py-10 flex items-center gap-4">
-            <div class="w-11 h-11 bg-orange-600 rounded-2xl flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-orange-900/20">IF</div>
+            <img src="{{ asset('build/LOGO.jpeg') }}" alt="PMES Logo" class="w-11 h-11 object-contain">
             <div>
-                <div class="font-extrabold text-lg text-white tracking-tight leading-tight">InkForge</div>
+                <div class="font-extrabold text-lg text-white tracking-tight leading-tight">PMES</div>
                 <div class="text-[10px] font-bold text-gray-600 uppercase tracking-[0.2em] mt-1">MES v1.0</div>
             </div>
         </div>

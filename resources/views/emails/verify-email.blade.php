@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Your Email – InkForge Solutions</title>
+    <title>Verify Your Email – PMES</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #030712; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -32,8 +32,8 @@
             {{-- Header --}}
             <div class="header">
                 <div class="logo">
-                    <div class="logo-icon">IF</div>
-                    <span class="logo-text">InkForge Solutions</span>
+                    <div class="logo-icon">PM</div>
+                    <span class="logo-text">PMES</span>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
 
                 <h1>Verify your email address</h1>
                 <p class="subtitle">
-                    Thanks for signing up with InkForge Solutions!<br>
+                    Thanks for signing up with PMES!<br>
                     Please click the button below to verify your email address and activate your account.
                 </p>
 
@@ -70,7 +70,7 @@
 
             {{-- Footer --}}
             <div class="footer">
-                <p>© {{ date('Y') }} InkForge Solutions. All rights reserved.<br>
+                <p>© {{ date('Y') }} PMES. All rights reserved.<br>
                 Custom T-Shirt Printing Manufacturing Execution System</p>
             </div>
         </div>

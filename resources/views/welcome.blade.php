@@ -3,75 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InkForge Solutions – Manufacturing Execution System</title>
+    <title>Production & Manufacturing Execution System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-gray-950 text-white">
+<body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
 
     {{-- Navbar --}}
-    <nav class="border-b border-gray-800 px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-sm">IF</div>
-            <span class="font-bold text-lg">InkForge Solutions</span>
-        </div>
-        <div class="flex items-center gap-3">
-            @auth
-                <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-300 hover:text-white transition">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-300 hover:text-white transition">Log in</a>
-                <a href="{{ route('register') }}" class="text-sm bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition font-medium">Get Started</a>
-            @endauth
+    <nav class="fixed inset-x-0 top-0 z-50 border-b border-gray-200 dark:border-gray-800/70 bg-white/60 dark:bg-gray-950/60 backdrop-blur px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#home" class="flex items-center gap-3">
+                <span class="inline-flex items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 p-2 shadow-sm shadow-orange-500/10">
+                    <img src="{{ asset('build/LOGO.jpeg') }}" alt="PMES Logo" class="h-10 w-auto sm:h-12 object-contain" />
+                </span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600 dark:text-gray-400">
+                <a href="#home" class="hover:text-gray-900 dark:hover:text-white transition">Home</a>
+                <a href="#features" class="hover:text-gray-900 dark:hover:text-white transition">Features</a>
+                <a href="#overview" class="hover:text-gray-900 dark:hover:text-white transition">Overview</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                @auth
+                    <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition">Sign In</a>
+                @endauth
+            </div>
         </div>
     </nav>
 
     {{-- Hero --}}
-    <section class="max-w-7xl mx-auto px-6 py-24 text-center">
-        <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
-            🖨️ Custom T-Shirt Printing MES
+    <section id="home" class="max-w-7xl mx-auto px-6 pt-28 pb-24">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-500 dark:text-orange-400 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+                🏭 Production & Manufacturing Execution System
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+                Run production with clarity.
+                <span class="block text-orange-500">Plan, execute, and improve.</span>
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 text-lg mt-6 mx-auto max-w-2xl">
+                PMES streamlines shop-floor execution with schedules, materials visibility, work orders, costing, and quality control—built for day-to-day operations.
+            </p>
+            <div class="flex items-center justify-center gap-4 flex-wrap mt-10">
+                <a href="{{ route('register') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition text-sm">
+                    Get Started →
+                </a>
+                <a href="#features" class="border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium px-6 py-3 rounded-lg transition text-sm">
+                    See Features
+                </a>
+            </div>
         </div>
-        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-            Manage Your Print Shop<br>
-            <span class="text-orange-500">From Order to Delivery</span>
-        </h1>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-            InkForge is a web-based Manufacturing Execution System built for custom t-shirt printing businesses.
-            Plan production, track materials, manage work orders, and control quality — all in one place.
-        </p>
-        <div class="flex items-center justify-center gap-4 flex-wrap">
-            <a href="{{ route('register') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition text-sm">
-                Start for Free →
-            </a>
-            <a href="{{ route('login') }}" class="border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white font-medium px-6 py-3 rounded-lg transition text-sm">
-                Sign In
-            </a>
-        </div>
+
+        {{-- Mock dashboard preview (visual only) --}}
+        <div class="relative mt-14 max-w-4xl mx-auto">
+            <div class="absolute -inset-6 bg-orange-500/10 blur-3xl rounded-full"></div>
+            <div class="relative bg-white/80 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-800 rounded-2xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="text-[11px] font-bold text-gray-600 dark:text-gray-400 tracking-[0.25em] uppercase">PMES Dashboard</div>
+                        <div class="flex items-center gap-2 text-gray-500">
+                            <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                            <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                            <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <div class="bg-gray-50 dark:bg-gray-950/40 border border-gray-200 dark:border-gray-800 rounded-xl p-4 transform-gpu transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-500/40">
+                            <div class="text-xs text-gray-600 dark:text-gray-500">Active Work Orders</div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white mt-1">18</div>
+                            <div class="text-xs text-emerald-400 mt-1">↑ 6% this week</div>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-950/40 border border-gray-200 dark:border-gray-800 rounded-xl p-4 transform-gpu transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-500/40">
+                            <div class="text-xs text-gray-600 dark:text-gray-500">Material Alerts</div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white mt-1">3</div>
+                            <div class="text-xs text-orange-500 dark:text-orange-400 mt-1">Needs review</div>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-950/40 border border-gray-200 dark:border-gray-800 rounded-xl p-4 transform-gpu transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-500/40">
+                            <div class="text-xs text-gray-600 dark:text-gray-500">Schedules</div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white mt-1">7</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Due this month</div>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-950/40 border border-gray-200 dark:border-gray-800 rounded-xl p-4 transform-gpu transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-500/40">
+                            <div class="text-xs text-gray-600 dark:text-gray-500">QC Pass Rate</div>
+                            <div class="text-2xl font-extrabold text-gray-900 dark:text-white mt-1">96%</div>
+                            <div class="text-xs text-emerald-400 mt-1">Stable</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-gray-50 dark:bg-gray-950/40 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="text-xs font-semibold text-gray-700 dark:text-gray-300">Production Progress</div>
+                            <div class="text-xs text-gray-600 dark:text-gray-500">Today</div>
+                        </div>
+                        <div class="mt-3 h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+                            <div class="h-full w-2/3 bg-orange-500"></div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-600 dark:text-gray-500">On-track vs plan</div>
+                    </div>
+                </div>
+            </div>
     </section>
 
     {{-- Features --}}
-    <section class="max-w-7xl mx-auto px-6 pb-24">
+    <section id="features" class="max-w-7xl mx-auto px-6 pb-24">
+        <div class="text-center mb-10">
+            <h6 class="text-xs font-bold text-orange-500 dark:text-orange-400 tracking-[0.25em] uppercase">Powerful Features</h6>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mt-3">Everything you need to run production</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">Core tools to plan, execute, and control manufacturing operations with less manual work.</p>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach([
-                ['🗓️', 'Production Planning', 'Schedule production runs based on design, quantity, and delivery date.'],
+                ['🗓️', 'Production Planning', 'Schedule production runs based on demand, capacity, and due dates.'],
                 ['📦', 'Material Requirements', 'Auto-compute material needs and detect shortages before production starts.'],
                 ['🔧', 'Work Order Management', 'Generate and monitor work orders from schedule to completion.'],
                 ['💰', 'Production Costing', 'Compute cost per batch and generate cost summaries automatically.'],
                 ['✅', 'Quality Control', 'Record and track inspection results for every production output.'],
                 ['👥', 'Role-Based Access', 'Admin, Planner, Inventory, Operator, and QC roles with proper permissions.'],
             ] as [$icon, $title, $desc])
-            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-orange-500/40 transition">
+            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 hover:border-orange-500/40 transition">
                 <div class="text-3xl mb-3">{{ $icon }}</div>
-                <h3 class="font-semibold text-white mb-2">{{ $title }}</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">{{ $desc }}</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $title }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{{ $desc }}</p>
             </div>
             @endforeach
         </div>
     </section>
 
+    {{-- Overview / CTA --}}
+    <section id="overview" class="max-w-7xl mx-auto px-6 pb-24">
+        <div class="bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 rounded-2xl p-10 md:p-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">Ready to improve production execution?</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">Bring planning, operations, inventory, costing, and quality into one system—so teams can act faster with better visibility.</p>
+            <div class="mt-8 flex items-center justify-center gap-4 flex-wrap">
+                <a href="{{ route('register') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition text-sm">Get Started</a>
+            </div>
+        </div>
+    </section>
+
     {{-- Footer --}}
-    <footer class="border-t border-gray-800 px-6 py-6 text-center text-gray-600 text-sm">
-        © {{ date('Y') }} InkForge Solutions. Built with Laravel.
+    <footer class="border-t border-gray-200 dark:border-gray-800/70 px-6 py-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-500">
+            <p>© {{ date('Y') }} PMES — Production & Manufacturing Execution System</p>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('privacy') }}" class="hover:text-gray-900 dark:hover:text-white transition">Privacy Policy</a>
+                <p class="text-gray-500 dark:text-gray-600">All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
 </body>

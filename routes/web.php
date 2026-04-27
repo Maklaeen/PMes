@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
